@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ms=${1:-100}
+ms=${1:-128}
 function mode_in() {
   gpio mode 0 in
   gpio mode 1 in
