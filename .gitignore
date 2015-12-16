@@ -2,4 +2,7 @@
 *.swp
 gpioExamples
 bin/
+scroller
+sleepms
+
 
