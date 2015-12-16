@@ -1,14 +1,14 @@
 CC=gcc
 CFLAGS=-Wall -std=gnu99 -I.
-DEPS=ledscroller.h
+DEPS=ledscroller_func.h
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) 
 
-compile: ledscroller.o
+compile: ledscroller_func.o
 
-ledscroller: ledscroller.o
+ledscroller: ledscroller_func.o
 	echo "Cant build on ubuntu"
 
 clean:
-	rm ledscroller.o
+	rm *.o
