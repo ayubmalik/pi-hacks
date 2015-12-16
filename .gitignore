@@ -4,6 +4,5 @@ gpioExamples
 bin/
 scroller
 sleepms
-.o
-
+*.o
 
