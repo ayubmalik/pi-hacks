@@ -11,4 +11,4 @@ ledscroller: ledscroller.o
 	echo "Cant build on ubuntu"
 
 clean:
-	rm ledscroller ledscroller.o
+	rm ledscroller.o
