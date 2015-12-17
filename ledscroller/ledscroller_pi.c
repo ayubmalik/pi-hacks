@@ -5,8 +5,7 @@
 
 #include "ledscroller_pi.h"
 
-int
-init_pi() {
+int init_pi() {
   printf("Initialising Pi and data\n");
   wiringPiSetupGpio() ;
 
@@ -19,13 +18,12 @@ init_pi() {
     pinMode(segments[j], OUTPUT);
     digitalWrite(segments[j], LOW);
   }
-  
+
   return 0;
 }
 
 
-int
-reset_pi() {
+int reset_pi() {
   printf("Resetting Pi");
   for(int i=0; i < sizeof digits / sizeof *digits; i++) {
     pinMode(digits[i], INPUT);
@@ -39,4 +37,3 @@ reset_pi() {
 
   return 0;
 }
-

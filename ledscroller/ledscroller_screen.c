@@ -1,11 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <wiringPi.h>
+#include <string.h>
 
 #include "ledscroller_pi.h"
 
-void
-write_screen(char *screen) {
+char* init_screen(int size) {
+  char *screen = malloc(sizeof(char) * size);
+  for (int i = 0; i < size; i++) {
+    screen[i] = ' ';
+  }
+  return screen;
+}
+
+void update_screen(char *screen, int screen_size, char *msg, int current_pos) {
+  strncpy(screen, msg + current_pos, 4);
+}
+
+void write_screen(char *screen) {
   printf("%s\n", screen);
 }

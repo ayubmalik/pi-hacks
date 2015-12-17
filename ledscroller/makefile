@@ -1,14 +1,14 @@
 CC=gcc
 CFLAGS=-Wall -std=gnu99 -I.
-DEPS=ledscroller_func.h
+DEPS=ledscroller_pi.h ledscroller_screen.h
+OBJ=ledscroller_pi.o ledscroller_screen.o ledscroller.o
 
 %.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS) 
+	$(CC) -c -o $@ $< $(CFLAGS)
 
-compile: ledscroller_pi.o ledscroller_screen.o
+ledscroller: $(OBJ)
+	gcc -o ledscroller ledscroller.o ledscroller_screen.o -I.
 
-ledscroller: ledscroller_screen.o
-	gcc -o $@ $^ $(CFLAGS)
-	
 clean:
 	rm *.o
+	rm ledscroller
