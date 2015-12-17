@@ -13,7 +13,7 @@ char* init_screen(int size) {
 }
 
 void update_screen(char *screen, int screen_size, char *msg, int current_pos) {
-  strncpy(screen, msg + current_pos, 4);
+  strncpy(screen, msg + current_pos, screen_size);
 }
 
 void write_screen(char *screen) {
