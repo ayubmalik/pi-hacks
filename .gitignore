@@ -2,10 +2,8 @@
 *.swp
 gpioExamples
 bin/
-scroller
 sleepms
 *.o
-wiringPi.h
 .project
 .cproject
-
+ledscroller

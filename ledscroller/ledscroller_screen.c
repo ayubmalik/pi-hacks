@@ -1,34 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
 
 #include "ledscroller_pi.h"
-
-#define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
-#define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
-
-#define TEMP_SIZE 4
+#include "ledscroller_screen.h"
 
 char* init_screen() {
-  char *screen = malloc(sizeof(char) * TEMP_SIZE);
-  for (int i = 0; i < TEMP_SIZE; i++) {
+  led_screen_t screen = malloc(sizeof(char) * TEMP_SCREEN_SIZE);
+  for (int i = 0; i < TEMP_SCREEN_SIZE; i++) {
     screen[i] = ' ';
   }
   return screen;
 }
 
-void update_screen(char *screen, int screen_size, char *msg, int current_pos) {
-  
-  int offset = MIN(screen_size, current_pos);
-  char *sub = malloc(sizeof(char) * screen_size);
-  char *temp = malloc(sizeof(char) * screen_size);
-  strncpy(sub, msg, 1 + offset);
-  sprintf(temp, "%4s", sub);
-  //strncpy(temp, msg, 1 + offset);
-  printf("%s", temp);
-  //strncpy(screen, msg + current_pos, offset);
+void update_screen(led_screen_t screen, int screen_size, char *msg, int current_pos) {
+  char *padding = malloc(screen_size -1);
+  memset (padding, ' ', screen_size - 1);
+
+  char *padded_msg = malloc(screen_size + strlen(msg) + 1);
+  strcpy(padded_msg, padding);
+  strcat(padded_msg, msg);
+  strncpy(screen, padded_msg + current_pos, screen_size);
 }
 
-void write_screen(char *screen) {
+void write_screen(led_screen_t screen) {
   printf("%s\n", screen);
+}
+
+void scroll(char *msg, int delay_in_ms) {
+  led_screen_t screen = init_screen();
+  int pos = 0;
+  for(;;) {
+    update_screen(screen, strlen(screen), msg, pos++ % strlen(msg));
+    write_screen(screen);
+    usleep(1000 * delay_in_ms);
+  }
 }
