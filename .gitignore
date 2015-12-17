@@ -6,5 +6,6 @@ scroller
 sleepms
 *.o
 wiringPi.h
-
+.project
+.cproject
 

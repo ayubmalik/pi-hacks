@@ -5,10 +5,10 @@ DEPS=ledscroller_func.h
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) 
 
-compile: ledscroller_func.o
+compile: ledscroller_pi.o ledscroller_screen.o
 
-ledscroller: ledscroller_func.o
-	echo "Cant build on ubuntu"
-
+ledscroller: ledscroller_screen.o
+	gcc -o $@ $^ $(CFLAGS)
+	
 clean:
 	rm *.o

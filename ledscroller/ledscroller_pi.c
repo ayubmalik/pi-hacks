@@ -3,10 +3,10 @@
 #include <unistd.h>
 #include <wiringPi.h>
 
-#include "ledscroller_func.h"
+#include "ledscroller_pi.h"
 
 int
-init_scroller() {
+init_pi() {
   printf("Initialising Pi and data\n");
   wiringPiSetupGpio() ;
 
@@ -18,10 +18,6 @@ init_scroller() {
   for(int j=0; j < sizeof segments / sizeof *segments; j++) {
     pinMode(segments[j], OUTPUT);
     digitalWrite(segments[j], LOW);
-  }
-  
-  for(int k=0; k < SCREEN_SIZE; k++) {
-    display[k]=' ';
   }
   
   return 0;
