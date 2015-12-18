@@ -21,11 +21,12 @@ int main(int argc, char *argv[]) {
   scroll(message, scroll_delay_in_ms);
   */  
   pi_init();
-  pi_write_char('0');
-  sleep(1);
-  pi_write_char('1');
-  sleep(1);
-  pi_write_char('2');
-  sleep(1);
+  
+  char charset[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ9876543210";
+  for (int i = 0; i < strlen(charset); i++) {
+    pi_write_char(charset[i]);
+    sleepms(500);
+  }
+  
   pi_reset();
 }

@@ -33,6 +33,10 @@ void scroll(char *msg, int delay_in_ms) {
   for(;;) {
     update_screen(screen, strlen(screen), msg, pos++ % strlen(msg));
     write_screen(screen);
-    usleep(1000 * delay_in_ms);
+    sleepms(delay_in_ms);
   }
+}
+
+void sleepms(int millis) {
+  usleep(1000 * millis);
 }

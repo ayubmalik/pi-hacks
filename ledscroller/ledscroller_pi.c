@@ -11,12 +11,54 @@ const int digits[]  = {22, 27, 17, 24};
 const int segments[] = {11,4,23,8,7,10,18,25};
 
 const int char_map[][NUM_SEGMENTS] = {
-  {1, 1, 1, 1, 1, 1, 0},
-  {0, 1, 1, 0, 0, 0, 0}
+   {0,0,0,0,0,0,0},  // blank
+   {1,1,1,1,1,1,0},  // 0
+   {0,1,1,0,0,0,0},  // 1
+   {1,1,0,1,1,0,1},  // 2
+   {1,1,1,1,0,0,1},  // 3
+   {0,1,1,0,0,1,1},  // 4
+   {1,0,1,1,0,1,1},  // 5
+   {1,0,1,1,1,1,1},  // 6
+   {1,1,1,0,0,0,0},  // 7
+   {1,1,1,1,1,1,1},  // 8
+   {1,1,1,1,0,1,1},  // 9
+   {1,1,1,1,1,1,1},  // Symbols
+   {1,1,1,1,1,1,1},
+   {1,1,1,1,1,1,1},
+   {1,1,1,1,1,1,1},
+   {1,1,1,1,1,1,1},
+   {1,1,1,1,1,1,1},
+   {1,1,1,1,1,1,1},
+   {1,1,1,0,1,1,1},  // A
+   {0,0,1,1,1,1,1},  // B
+   {1,0,0,1,1,1,0},  // C
+   {0,1,1,1,1,0,1},  // D
+   {1,0,0,1,1,1,1},  // E
+   {1,0,0,0,1,1,1},  // F
+   {1,1,1,1,0,1,1},  // G
+   {0,1,1,0,1,1,1},  // H
+   {0,1,1,0,0,0,0},  // I
+   {0,1,1,1,0,0,0},  // J
+   {0,1,1,0,1,1,1},  // K
+   {0,0,0,1,1,1,0},  // L
+   {0,0,1,0,1,0,1},  // M
+   {0,0,1,0,1,0,1},  // N
+   {1,1,1,1,1,1,0},  // O
+   {1,1,0,0,1,1,1},  // P
+   {1,1,1,0,0,1,1},  // Q
+   {1,0,0,0,1,1,0},  // R
+   {1,0,1,1,0,1,1},  // S
+   {0,0,0,1,1,1,1},  // T
+   {0,1,1,1,1,1,0},  // U
+   {0,1,1,1,1,1,0},  // V
+   {0,1,1,1,1,1,0},  // W
+   {0,1,1,0,1,1,1},  // X
+   {0,1,1,1,0,1,1},  // Y
+   {1,1,0,1,1,0,1},  // Z
 };
 
 int pi_init() {
-  printf("Initialising Pi and data\n");
+  printf("Initialising Pi\n");
   wiringPiSetupGpio();
 
   for(int i=0; i < sizeof digits / sizeof *digits; i++) {
@@ -34,7 +76,7 @@ int pi_init() {
 
 
 int pi_reset() {
-  printf("Resetting Pi");
+  printf("Resetting Pi\n");
   for(int i=0; i < sizeof digits / sizeof *digits; i++) {
     pinMode(digits[i], INPUT);
     digitalWrite(digits[i], LOW);
@@ -49,13 +91,14 @@ int pi_reset() {
 }
 
 void pi_write_char(char c) {
+  const int *bits;
   if (c < '0' || c > 'Z') {
-    printf("non printable char: %c\n", c);
-    return;
+    bits = *char_map;
+  } else {
+    bits = char_map[1+c - '0'];
   }
   
   digitalWrite(22, LOW);
-  const int *bits = char_map[c - '0'];
   for(int i=0; i < NUM_SEGMENTS; i++) {
     digitalWrite(segments[i], bits[i]);
   }
