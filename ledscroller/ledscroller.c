@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 
+#include "ledscroller_pi.h"
 #include "ledscroller_screen.h"
 
 void check_usage(int argc) {
@@ -17,4 +18,5 @@ int main(int argc, char *argv[]) {
   char *message = argv[1];
   int scroll_delay_in_ms = strtol(argv[2], NULL, 10);
   scroll(message, scroll_delay_in_ms);
+  pi_init();
 }
