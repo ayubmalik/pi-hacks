@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <string.h>
 
-#include "ledscroller_pi.h"
 #include "ledscroller_screen.h"
 
 char* init_screen() {
