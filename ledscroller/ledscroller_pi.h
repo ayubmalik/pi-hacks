@@ -9,5 +9,5 @@ int pi_init();
 
 int pi_reset();
 
-void pi_write_char(char c);
+void pi_write_char(int led_pos, char c);
 

@@ -5,7 +5,6 @@
 
 #include "ledscroller_pi.h"
 
-#define MS 1000
 const int digits[]  = {22, 27, 17, 24};
 
 const int segments[] = {11,4,23,8,7,10,18,25};
@@ -90,7 +89,7 @@ int pi_reset() {
   return 0;
 }
 
-void pi_write_char(char c) {
+void pi_write_char(int led_pos, char c) {
   const int *bits;
   if (c < '0' || c > 'Z') {
     bits = *char_map;
