@@ -15,26 +15,42 @@ char* init_screen() {
 }
 
 void update_screen(led_screen_t screen, int screen_size, char *msg, int current_pos) {
-  char *padding = malloc(screen_size -1);
+  char *padding = malloc(screen_size);
   memset (padding, ' ', screen_size - 1);
 
-  char *padded_msg = malloc(screen_size + strlen(msg) + 1);
+  char *padded_msg = malloc(screen_size + strlen(msg));
   strcpy(padded_msg, padding);
   strcat(padded_msg, msg);
-  strncpy(screen, padded_msg + current_pos, screen_size);
+  printf("%d {%s}", current_pos, screen);
+  strncpy(screen, msg + current_pos, screen_size);
 }
 
-void write_screen(led_screen_t screen) {
-  printf("%s\n", screen);
+void write_screen(led_screen_t screen, int delay_in_ms) {
+  printf("|%s|\n", screen);
+  int hz = 4;
+  int count = 0;
+  while (count < delay_in_ms) {
+    pi_write_char(0, screen[0]);
+    sleepms(hz);
+    pi_write_char(1, screen[1]);
+    sleepms(hz);
+    pi_write_char(2, screen[2]);
+    sleepms(hz);
+    pi_write_char(3, screen[3]);
+    sleepms(hz);
+    count += hz * 4;
+ }
 }
 
 void scroll(char *msg, int delay_in_ms) {
+  pi_init();
   led_screen_t screen = init_screen();
   int pos = 0;
+  update_screen(screen, 4, "arsenal", pos);
   for(;;) {
-    update_screen(screen, strlen(screen), msg, pos++ % strlen(msg));
-    write_screen(screen);
-    sleepms(delay_in_ms);
+    //update_screen(screen, strlen(screen), msg, pos);
+    write_screen(screen, delay_in_ms);
+    //sleepms(delay_in_ms);
   }
 }
 
