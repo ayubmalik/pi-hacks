@@ -1,5 +1,3 @@
-#define TEMP_SCREEN_SIZE 4
-
 typedef char* led_screen_t;
 
 led_screen_t init_screen();

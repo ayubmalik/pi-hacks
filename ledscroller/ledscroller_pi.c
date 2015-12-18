@@ -5,7 +5,7 @@
 
 #include "ledscroller_pi.h"
 
-const int digits[]  = {22, 27, 17, 24};
+const int leds[]  = {22, 27, 17, 24};
 
 const int segments[] = {11,4,23,8,7,10,18,25};
 
@@ -60,9 +60,9 @@ int pi_init() {
   printf("Initialising Pi\n");
   wiringPiSetupGpio();
 
-  for(int i=0; i < sizeof digits / sizeof *digits; i++) {
-    pinMode(digits[i], OUTPUT);
-    digitalWrite(digits[i], HIGH);
+  for(int i=0; i < sizeof leds / sizeof *leds; i++) {
+    pinMode(leds[i], OUTPUT);
+    digitalWrite(leds[i], HIGH);
   }
 
   for(int j=0; j < sizeof segments / sizeof *segments; j++) {
@@ -73,12 +73,11 @@ int pi_init() {
   return 0;
 }
 
-
 int pi_reset() {
   printf("Resetting Pi\n");
-  for(int i=0; i < sizeof digits / sizeof *digits; i++) {
-    pinMode(digits[i], INPUT);
-    digitalWrite(digits[i], LOW);
+  for(int i=0; i < sizeof leds / sizeof *leds; i++) {
+    pinMode(leds[i], INPUT);
+    digitalWrite(leds[i], LOW);
   }
 
   for(int j=0; j < sizeof segments / sizeof *segments; j++) {
@@ -89,7 +88,7 @@ int pi_reset() {
   return 0;
 }
 
-void pi_write_char(int led_pos, char c) {
+void pi_write_char(int pos, char c) {
   const int *bits;
   if (c < '0' || c > 'Z') {
     bits = *char_map;
@@ -97,7 +96,7 @@ void pi_write_char(int led_pos, char c) {
     bits = char_map[1+c - '0'];
   }
   
-  digitalWrite(22, LOW);
+  digitalWrite(leds[pos], LOW);
   for(int i=0; i < NUM_SEGMENTS; i++) {
     digitalWrite(segments[i], bits[i]);
   }

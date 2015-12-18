@@ -3,11 +3,12 @@
 #include <unistd.h>
 #include <string.h>
 
+#include "ledscroller_pi.h"
 #include "ledscroller_screen.h"
 
 char* init_screen() {
-  led_screen_t screen = malloc(sizeof(char) * TEMP_SCREEN_SIZE);
-  for (int i = 0; i < TEMP_SCREEN_SIZE; i++) {
+  led_screen_t screen = malloc(sizeof(char) * NUM_LEDS);
+  for (int i = 0; i < NUM_LEDS; i++) {
     screen[i] = ' ';
   }
   return screen;
@@ -40,3 +41,4 @@ void scroll(char *msg, int delay_in_ms) {
 void sleepms(int millis) {
   usleep(1000 * millis);
 }
+
