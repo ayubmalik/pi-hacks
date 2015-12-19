@@ -6,29 +6,37 @@
 #include "ledscroller_pi.h"
 #include "ledscroller_screen.h"
 
-char* init_screen() {
-  led_screen_t screen = malloc(sizeof(char) * NUM_LEDS);
+char* screen_init() {
+  screen_t screen = malloc(sizeof(char) * NUM_LEDS);
   for (int i = 0; i < NUM_LEDS; i++) {
     screen[i] = ' ';
   }
   return screen;
 }
 
-void update_screen(led_screen_t screen, int screen_size, char *msg, int current_pos) {
-  char *padding = malloc(screen_size);
-  memset (padding, ' ', screen_size - 1);
+void screen_update(screen_t screen, int screen_size, char *msg, int current_pos) {
+  int msg_len = strlen(msg);
+  int offset = (current_pos % msg_len);
+  char *padded_screen = malloc(screen_size);
+  printf("%d\n", screen_size);
+  memset(padded_screen, 'E', 4);
+  //strncpy(padded_screen, msg + offset, screen_size);
 
-  char *padded_msg = malloc(screen_size + strlen(msg));
-  strcpy(padded_msg, padding);
-  strcat(padded_msg, msg);
-  printf("%d {%s}", current_pos, screen);
-  strncpy(screen, msg + current_pos, screen_size);
+  /*int pad_len = screen_size -  strlen(padded_screen);
+  if (pad_len > 0) {
+     char *padding = malloc(pad_len + 1);
+     memset (padding, ' ', pad_len);
+     strcat(padded_screen, padding);
+  } */
+  printf("pb %d %d |%s|\n", offset, strlen(padded_screen), padded_screen);
+  strcpy(screen, padded_screen);
 }
 
-void write_screen(led_screen_t screen, int delay_in_ms) {
+void screen_write(screen_t screen, int delay_in_ms) {
   printf("|%s|\n", screen);
   int hz = 4;
   int count = 0;
+  
   while (count < delay_in_ms) {
     pi_write_char(0, screen[0]);
     sleepms(hz);
@@ -42,15 +50,20 @@ void write_screen(led_screen_t screen, int delay_in_ms) {
  }
 }
 
-void scroll(char *msg, int delay_in_ms) {
+void screen_scroll(char *msg, int delay_in_ms) {
   pi_init();
-  led_screen_t screen = init_screen();
+  screen_t screen = screen_init();
+  int screen_size = strlen(screen);
+  char *padding = malloc(screen_size + 1);
+  memset(padding, ' ', screen_size);
+  char *padded_msg = malloc(strlen(msg) + screen_size + 1);
+  strcpy(padded_msg, padding);
+  strcat(padded_msg, msg);
   int pos = 0;
-  update_screen(screen, 4, "arsenal", pos);
   for(;;) {
-    //update_screen(screen, strlen(screen), msg, pos);
-    write_screen(screen, delay_in_ms);
-    //sleepms(delay_in_ms);
+    screen_update(screen, strlen(screen), padded_msg, pos);
+    screen_write(screen, delay_in_ms);
+    pos++;
   }
 }
 

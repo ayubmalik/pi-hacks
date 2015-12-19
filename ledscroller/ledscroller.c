@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
   signal(SIGINT, intHandler);
   check_usage(argc);
   char *message = argv[1];
-
+ 
   int scroll_delay_in_ms = strtol(argv[2], NULL, 10);
-  scroll(message, scroll_delay_in_ms);
+  screen_scroll(message, scroll_delay_in_ms);
 }

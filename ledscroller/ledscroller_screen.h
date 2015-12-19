@@ -1,11 +1,10 @@
-typedef char* led_screen_t;
+typedef char* screen_t;
 
-led_screen_t init_screen();
+screen_t screen_init();
 
-void update_screen(led_screen_t, int screen_size, char *msg, int current_pos);
+void screen_update(screen_t, int screen_size, char *msg, int current_pos);
 
-void write_screen(led_screen_t, int delay_in_ms);
-
-void scroll(char *msg, int delay_in_ms);
+void screen_scroll(char *msg, int delay_in_ms);
 
 void sleepms(int millis);
+
