@@ -18,7 +18,7 @@ void screen_update(screen_t screen, int screen_size, char *msg, int current_pos)
   int offset = (current_pos % msg_len);
   char *padded_screen = screen_init();
   
-  strcpy(padded_screen, msg + offset);
+  strncpy(padded_screen, msg + offset, screen_size);
   int pad_len = screen_size -  strlen(padded_screen);
   //printf("%d %d %d\n", offset, screen_size, pad_len);
   if (pad_len > 0) {
