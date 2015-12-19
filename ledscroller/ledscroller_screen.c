@@ -7,8 +7,8 @@
 #include "ledscroller_screen.h"
 #define PAD_CHAR ' '
 
-char* screen_init() {
-  screen_t screen = malloc(sizeof(char*) * (NUM_LEDS + 1));
+screen_t screen_init() {
+  screen_t screen = malloc(sizeof(char) * (NUM_LEDS + 1));
   memset(screen, PAD_CHAR, NUM_LEDS);
   return screen;
 }
@@ -18,7 +18,7 @@ void screen_update(screen_t screen, int screen_size, char *msg, int current_pos)
   int offset = (current_pos % msg_len);
   char *padded_screen = screen_init();
   
-  strncpy(padded_screen, msg + offset, screen_size);
+  strcpy(padded_screen, msg + offset);
   int pad_len = screen_size -  strlen(padded_screen);
   //printf("%d %d %d\n", offset, screen_size, pad_len);
   if (pad_len > 0) {
@@ -26,7 +26,6 @@ void screen_update(screen_t screen, int screen_size, char *msg, int current_pos)
      memset (rpad, PAD_CHAR, pad_len);
      strcat(padded_screen, rpad);
   }
-  //printf("pb %d %d |%s|\n", offset, strlen(padded_screen), padded_screen);
   strncpy(screen, padded_screen, screen_size);
 }
 
@@ -52,14 +51,13 @@ void screen_scroll(char *msg, int delay_in_ms) {
   pi_init();
   screen_t screen = screen_init();
   int screen_size = strlen(screen);
-  char *padding = malloc(screen_size + 1);
-  memset(padding, ' ', screen_size);
+  char *padding = screen_init();
   char *padded_msg = malloc(strlen(msg) + screen_size + 1);
   strcpy(padded_msg, padding);
   strcat(padded_msg, msg);
   int pos = 0;
   for(;;) {
-    screen_update(screen, strlen(screen), padded_msg, pos);
+    screen_update(screen, screen_size, padded_msg, pos);
     screen_write(screen, delay_in_ms);
     pos++;
   }
