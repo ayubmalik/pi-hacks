@@ -5,31 +5,29 @@
 
 #include "ledscroller_pi.h"
 #include "ledscroller_screen.h"
+#define PAD_CHAR ' '
 
 char* screen_init() {
-  screen_t screen = malloc(sizeof(char) * NUM_LEDS);
-  for (int i = 0; i < NUM_LEDS; i++) {
-    screen[i] = ' ';
-  }
+  screen_t screen = malloc(sizeof(char*) * (NUM_LEDS + 1));
+  memset(screen, PAD_CHAR, NUM_LEDS);
   return screen;
 }
 
 void screen_update(screen_t screen, int screen_size, char *msg, int current_pos) {
   int msg_len = strlen(msg);
   int offset = (current_pos % msg_len);
-  char *padded_screen = malloc(screen_size);
-  printf("%d\n", screen_size);
-  memset(padded_screen, 'E', 4);
-  //strncpy(padded_screen, msg + offset, screen_size);
-
-  /*int pad_len = screen_size -  strlen(padded_screen);
+  char *padded_screen = screen_init();
+  
+  strncpy(padded_screen, msg + offset, screen_size);
+  int pad_len = screen_size -  strlen(padded_screen);
+  //printf("%d %d %d\n", offset, screen_size, pad_len);
   if (pad_len > 0) {
-     char *padding = malloc(pad_len + 1);
-     memset (padding, ' ', pad_len);
-     strcat(padded_screen, padding);
-  } */
-  printf("pb %d %d |%s|\n", offset, strlen(padded_screen), padded_screen);
-  strcpy(screen, padded_screen);
+     char *rpad = malloc(pad_len + 1);
+     memset (rpad, PAD_CHAR, pad_len);
+     strcat(padded_screen, rpad);
+  }
+  //printf("pb %d %d |%s|\n", offset, strlen(padded_screen), padded_screen);
+  strncpy(screen, padded_screen, screen_size);
 }
 
 void screen_write(screen_t screen, int delay_in_ms) {
