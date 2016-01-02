@@ -1,6 +1,6 @@
 CC=gcc -std=gnu99
 CFLAGS=-Wall
-LDFLAGS=-lncursesw
+LDFLAGS=-lncursesw -lpanel
 INCLUDES=-I../includes
 SAMPLES:=$(wildcard sample*.c)
 
