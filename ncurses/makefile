@@ -14,5 +14,4 @@ sample%: sample%.o
 
 .PHONY: clean
 clean:
-	find . -regex "\.\/sample[0-9]+" -delete
-
+	find . -regex "\.\/sample[^\.]*" -print -delete
