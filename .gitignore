@@ -6,4 +6,4 @@ sleepms
 *.o
 .project
 .cproject
-ledscroller
+sample*

@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-Wall
 LDFLAGS=-lncurses
-INCLUDES=-I/home/ayub/workspace/c/includes
+INCLUDES=-I../includes
 DEPS=
 
 %.o: %.c
