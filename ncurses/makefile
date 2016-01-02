@@ -1,19 +1,18 @@
-CC=gcc
+CC=gcc -std=gnu99
 CFLAGS=-Wall
-LDFLAGS=-lncurses
+LDFLAGS=-lncursesw
 INCLUDES=-I../includes
-DEPS=
+SAMPLES:=$(wildcard sample*.c)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-all: sample1 sample2
+all: $(patsubst %.c, %, $(SAMPLES))
 
 sample%: sample%.o
 	$(CC) -o $@ $< $(LDFLAGS)
 
 .PHONY: clean
-
 clean:
 	find . -regex "\.\/sample[0-9]+" -delete
 

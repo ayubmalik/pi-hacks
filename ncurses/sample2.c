@@ -1,7 +1,7 @@
-#include "dbg.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <curses.h>
+#include <ncurses.h>
+#include "dbg.h"
 
 int main(int argc, char *argv[]) {
   WINDOW * mainwin;
