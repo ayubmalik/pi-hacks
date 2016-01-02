@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
   WINDOW * mainwin;
   
   debug("init main window");
-  check(mainwin = initscr(), "Could not initscr");
+  check(mainwin = initscr(), "Could not initscr()");
 
   mvaddstr(13, 33, "Hello, world!");
   refresh();
