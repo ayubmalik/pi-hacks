@@ -6,4 +6,5 @@ sleepms
 *.o
 .project
 .cproject
-sample*
+*.orig
+
